@@ -197,7 +197,11 @@ int read(int fd, void* buffer, unsigned int sz) {
     DWORD bytesRecv = 0;
     DWORD flags = 0;
     if (WSARecv(fd, vecs, 1, &bytesRecv, &flags, NULL, NULL)) {
-        if (WSAGetLastError() == WSAECONNRESET)
+		int wsaerr = WSAGetLastError();
+		if (wsaerr == WSAEWOULDBLOCK){
+			errno = EWOULDBLOCK;
+		}
+        if (wsaerr == WSAECONNRESET)
             return 0;
         return -1;
     }
