@@ -177,32 +177,32 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
     aux_source_directory(3rd/reactphysics3d/src/systems/ RP3D_systems_SRC)
     aux_source_directory(3rd/reactphysics3d/src/utils/ RP3D_utils_SRC)
     aux_source_directory(3rd/reactphysics3d/src/utils/quickhull/ RP3D_utils_quickhull_SRC)
-    add_library(rp3d SHARED ${RP3D_SRC} ${RP3D_body_SRC} 
-                ${RP3D_collision_SRC}  ${RP3D_collision_broadphase_SRC}
-                ${RP3D_collision_narrowphase_SRC} ${RP3D_collision_narrowphase_GJK_SRC}
-                ${RP3D_collision_narrowphase_SAT_SRC} ${RP3D_collision_shapes_SRC}
-                ${RP3D_components_SRC} ${RP3D_constraint_SRC}
-                ${RP3D_engine_SRC} ${RP3D_mathematics_SRC}
-                ${RP3D_memory_SRC} ${RP3D_systems_SRC}
-                ${RP3D_utils_SRC} ${RP3D_utils_quickhull_SRC} )
-    target_include_directories(rp3d PRIVATE 3rd/reactphysics3d/include/
-                3rd/reactphysics3d/include/reactphysics3d/body/
-                3rd/reactphysics3d/include/reactphysics3d/collision/
-                3rd/reactphysics3d/include/reactphysics3d/collision/broadphase/
-                3rd/reactphysics3d/include/reactphysics3d/collision/narrowphase/
-                3rd/reactphysics3d/include/reactphysics3d/collision/narrowphase/GJK/
-                3rd/reactphysics3d/include/reactphysics3d/collision/narrowphase/SAT/
-                3rd/reactphysics3d/include/reactphysics3d/collision/shapes/
-                3rd/reactphysics3d/include/reactphysics3d/components/
-                3rd/reactphysics3d/include/reactphysics3d/constraint/
-                3rd/reactphysics3d/include/reactphysics3d/containers/
-                3rd/reactphysics3d/include/reactphysics3d/engine/
-                3rd/reactphysics3d/include/reactphysics3d/mathematics/
-                3rd/reactphysics3d/include/reactphysics3d/memory/
-                3rd/reactphysics3d/include/reactphysics3d/systems/
-                3rd/reactphysics3d/include/reactphysics3d/utils/
-                3rd/reactphysics3d/include/reactphysics3d/utils/quickhull/ )
-    target_link_libraries(rp3d liblua)
+    # add_library(rp3d SHARED ${RP3D_SRC} ${RP3D_body_SRC} 
+    #            ${RP3D_collision_SRC}  ${RP3D_collision_broadphase_SRC}
+    #            ${RP3D_collision_narrowphase_SRC} ${RP3D_collision_narrowphase_GJK_SRC}
+    #            ${RP3D_collision_narrowphase_SAT_SRC} ${RP3D_collision_shapes_SRC}
+    #            ${RP3D_components_SRC} ${RP3D_constraint_SRC}
+    #            ${RP3D_engine_SRC} ${RP3D_mathematics_SRC}
+    #            ${RP3D_memory_SRC} ${RP3D_systems_SRC}
+    #            ${RP3D_utils_SRC} ${RP3D_utils_quickhull_SRC} )
+    # target_include_directories(rp3d PRIVATE 3rd/reactphysics3d/include/
+    #            3rd/reactphysics3d/include/reactphysics3d/body/
+    #            3rd/reactphysics3d/include/reactphysics3d/collision/
+    #            3rd/reactphysics3d/include/reactphysics3d/collision/broadphase/
+    #            3rd/reactphysics3d/include/reactphysics3d/collision/narrowphase/
+    #            3rd/reactphysics3d/include/reactphysics3d/collision/narrowphase/GJK/
+    #            3rd/reactphysics3d/include/reactphysics3d/collision/narrowphase/SAT/
+    #            3rd/reactphysics3d/include/reactphysics3d/collision/shapes/
+    #            3rd/reactphysics3d/include/reactphysics3d/components/
+    #            3rd/reactphysics3d/include/reactphysics3d/constraint/
+    #            3rd/reactphysics3d/include/reactphysics3d/containers/
+    #            3rd/reactphysics3d/include/reactphysics3d/engine/
+    #            3rd/reactphysics3d/include/reactphysics3d/mathematics/
+    #            3rd/reactphysics3d/include/reactphysics3d/memory/
+    #            3rd/reactphysics3d/include/reactphysics3d/systems/
+    #            3rd/reactphysics3d/include/reactphysics3d/utils/
+    #            3rd/reactphysics3d/include/reactphysics3d/utils/quickhull/ )
+    # target_link_libraries(rp3d liblua)
 
     # 生成动态库 ecs.so
     aux_source_directory(pluto/luaclib/luaecs ECS_SRC)
@@ -212,7 +212,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set_target_properties(lpeg sproto client md5 bson skynetso
         pb lfs fmt yyjson
         zset aoi navmesh math3d 
-        rp3d ecs 
+        # rp3d ecs 
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/luaclib
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/luaclib
