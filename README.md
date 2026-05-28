@@ -2,6 +2,9 @@
 
 [skynet-cmake](https://github.com/hanxi/skynet-cmake) 是 [skynet](https://github.com/cloudwu/skynet) 的使用 CMake 的多平台的实现。
 
+#修复
+1.window下 socket WSAEWOULDBLOCK导致异常断开问题。
+2.修复 localtime_r 宏window下函数参数异常
 ## 特点
 
 - 支持在 Visual Studio 2022 中编译运行。
