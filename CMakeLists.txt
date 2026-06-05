@@ -81,6 +81,22 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 endif()
 
 # ============================================================
+# 平台特定变量设置（必须在平台构建块之前定义）
+# ============================================================
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set(PLATFORM_COMPILE_DEFS NOUSE_JEMALLOC)
+    set(PLATFORM_LINK_LIBS ws2_32 pthreadVC3)
+elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    set(PLATFORM_COMPILE_DEFS NOUSE_JEMALLOC LUA_USE_LINUX LUA_USE_READLINE)
+    set(PLATFORM_LINK_LIBS m pthread dl rt)
+elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    set(PLATFORM_COMPILE_DEFS NOUSE_JEMALLOC LUA_USE_MACOSX LUA_USE_READLINE)
+    set(PLATFORM_LINK_LIBS m pthread dl)
+endif()
+
+add_compile_definitions(${PLATFORM_COMPILE_DEFS})
+
+# ============================================================
 # Windows 特定设置与构建
 # ============================================================
 if (CMAKE_SYSTEM_NAME MATCHES "Windows")
@@ -138,22 +154,6 @@ else ()
     endif()
 
 endif ()
-
-# ============================================================
-# 平台特定变量设置（统一代码块）
-# ============================================================
-if (CMAKE_SYSTEM_NAME MATCHES "Windows")
-    set(PLATFORM_COMPILE_DEFS NOUSE_JEMALLOC)
-    set(PLATFORM_LINK_LIBS ws2_32 pthreadVC3)
-elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set(PLATFORM_COMPILE_DEFS NOUSE_JEMALLOC LUA_USE_LINUX LUA_USE_READLINE)
-    set(PLATFORM_LINK_LIBS m pthread dl rt)
-elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    set(PLATFORM_COMPILE_DEFS NOUSE_JEMALLOC LUA_USE_MACOSX LUA_USE_READLINE)
-    set(PLATFORM_LINK_LIBS m pthread dl)
-endif()
-
-add_compile_definitions(${PLATFORM_COMPILE_DEFS})
 
 # ============================================================
 # 统一 luaclib（逐个 add_luaclib，平台差异直接在参数中处理）
