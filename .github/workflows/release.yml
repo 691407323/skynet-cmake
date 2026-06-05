@@ -1,0 +1,112 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Configure build PATH
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Configure CMake
+      run: cmake --preset x64-debug
+
+    - name: Build
+      run: cmake --build out/build/x64-debug
+
+    - name: Package
+      run: |
+        mkdir package
+        cp out/build/x64-debug/skynet.exe package/
+        cp out/build/x64-debug/luaclib/*.so package/
+        cp out/build/x64-debug/cservice/*.so package/
+        cp -r service lualib test examples package/
+        Compress-Archive -Path package/* -DestinationPath skynet-windows-x64.zip
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: skynet-windows-x64
+        path: skynet-windows-x64.zip
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y libreadline-dev
+
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib_src/openssl/lib/linux
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Package
+      run: |
+        mkdir -p package
+        cp build/skynet package/
+        cp build/luaclib/*.so package/
+        cp -r service lualib test examples package/
+        zip -r skynet-linux-x64.zip package/*
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: skynet-linux-x64
+        path: skynet-linux-x64.zip
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib_src/openssl/lib/mac
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Package
+      run: |
+        mkdir -p package
+        cp build/skynet package/
+        cp build/luaclib/*.so package/
+        cp -r service lualib test examples package/
+        zip -r skynet-macos-x64.zip package/*
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: skynet-macos-x64
+        path: skynet-macos-x64.zip
+
+  release:
+    needs: [build-windows, build-linux, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: artifacts/**/*.zip
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
