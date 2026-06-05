@@ -55,8 +55,7 @@ jobs:
     - name: Package
       run: |
         mkdir -p package
-        find build -maxdepth 1 -type f -exec cp {} package/ \;
-        find build -maxdepth 1 -type d ! -name "build" ! -name "CMakeFiles" | while read dir; do cp -r "$dir" package/; done
+        cp -r build/* package/
         cd package && zip -r ../skynet-linux-x64.zip .
 
     - name: Upload artifact
@@ -81,8 +80,7 @@ jobs:
     - name: Package
       run: |
         mkdir -p package
-        find build -maxdepth 1 -type f -exec cp {} package/ \;
-        find build -maxdepth 1 -type d ! -name "build" ! -name "CMakeFiles" | while read dir; do cp -r "$dir" package/; done
+        cp -r build/* package/
         cd package && zip -r ../skynet-macos-x64.zip .
 
     - name: Upload artifact

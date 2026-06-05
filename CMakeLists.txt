@@ -285,8 +285,8 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
         SUFFIX .so
     )
 elseif (CMAKE_SYSTEM_NAME MATCHES "Linux|Darwin")
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/luaclib)
     set_target_properties(${LUACLIB_TARGETS} PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/luaclib
         PREFIX ""
         SUFFIX .so
     )
@@ -317,6 +317,7 @@ function(add_cservice_from_dir SRC_DIR PATH_PREFIX)
             )
         else()
             set_target_properties(${LIB_NAME} PROPERTIES
+                LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/cservice
                 PREFIX ""
                 SUFFIX .so
             )
