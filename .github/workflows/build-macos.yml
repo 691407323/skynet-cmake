@@ -11,7 +11,7 @@ jobs:
         submodules: true
 
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib_src/openssl/lib/mac
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib-src/openssl/lib/mac
 
     - name: Build
       run: cmake --build build
