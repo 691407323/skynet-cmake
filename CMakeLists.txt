@@ -132,12 +132,6 @@ else ()
     endif()
     target_link_libraries(skynet ${PLATFORM_LINK_LIBS})
 
-    # 生成动态库 skynet.so
-    add_luaclib(skynetso SRCS ${SKYNET_LUACLIB_SRC}
-        INCLUDES "core/skynet/skynet-src;core/skynet/lualib-src"
-    )
-    set_target_properties(skynetso PROPERTIES OUTPUT_NAME skynet PREFIX "" SUFFIX .so)
-
     if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
         message(STATUS " Darwin The value of CMAKE_BINARY_DIR is: ${CMAKE_BINARY_DIR}")
         set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR})
