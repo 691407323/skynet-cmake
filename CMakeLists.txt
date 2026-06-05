@@ -232,30 +232,30 @@ aux_source_directory(luaclib-src/recastnavigation/Recast/Source Recast_SRC)
 target_sources(navmesh PRIVATE ${Detour_SRC} ${DetourCrowd_SRC} ${DetourTileCache_SRC} ${Recast_SRC})
 
 # 生成动态库 rp3d.so
-aux_source_directory(luaclib-src/lua-rp3d RP3D_LUA_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/body/ RP3D_body_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/collision/ RP3D_collision_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/collision/broadphase/ RP3D_collision_broadphase_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/collision/narrowphase/ RP3D_collision_narrowphase_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/collision/narrowphase/GJK/ RP3D_collision_narrowphase_GJK_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/collision/narrowphase/SAT/ RP3D_collision_narrowphase_SAT_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/collision/shapes/ RP3D_collision_shapes_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/components/ RP3D_components_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/constraint/ RP3D_constraint_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/engine/ RP3D_engine_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/mathematics/ RP3D_mathematics_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/memory/ RP3D_memory_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/systems/ RP3D_systems_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/utils/ RP3D_utils_SRC)
-aux_source_directory(luaclib-src/reactphysics3d/src/utils/quickhull/ RP3D_utils_quickhull_SRC)
-# message(STATUS ">>> [rp3d] LUA_SRC=${RP3D_LUA_SRC}")
-# message(STATUS ">>> [rp3d] body_SRC=${RP3D_body_SRC}")
-# message(STATUS ">>> [rp3d] collision_SRC=${RP3D_collision_SRC}")
-set(RP3D_ALL_SRC "${RP3D_LUA_SRC};${RP3D_body_SRC};${RP3D_collision_SRC};${RP3D_collision_broadphase_SRC};${RP3D_collision_narrowphase_SRC};${RP3D_collision_narrowphase_GJK_SRC};${RP3D_collision_narrowphase_SAT_SRC};${RP3D_collision_shapes_SRC};${RP3D_components_SRC};${RP3D_constraint_SRC};${RP3D_engine_SRC};${RP3D_mathematics_SRC};${RP3D_memory_SRC};${RP3D_systems_SRC};${RP3D_utils_SRC};${RP3D_utils_quickhull_SRC}")
-# message(STATUS ">>> [rp3d] ALL_SRC=${RP3D_ALL_SRC}")
-add_luaclib(rp3d SRCS "${RP3D_ALL_SRC}"
-    INCLUDES "luaclib-src/reactphysics3d/include/;luaclib-src/reactphysics3d/include/reactphysics3d/body/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/broadphase/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/narrowphase/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/narrowphase/GJK/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/narrowphase/SAT/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/shapes/;luaclib-src/reactphysics3d/include/reactphysics3d/components/;luaclib-src/reactphysics3d/include/reactphysics3d/constraint/;luaclib-src/reactphysics3d/include/reactphysics3d/containers/;luaclib-src/reactphysics3d/include/reactphysics3d/engine/;luaclib-src/reactphysics3d/include/reactphysics3d/mathematics/;luaclib-src/reactphysics3d/include/reactphysics3d/memory/;luaclib-src/reactphysics3d/include/reactphysics3d/systems/;luaclib-src/reactphysics3d/include/reactphysics3d/utils/;luaclib-src/reactphysics3d/include/reactphysics3d/utils/quickhull/"
-)
+# aux_source_directory(luaclib-src/lua-rp3d RP3D_LUA_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/body/ RP3D_body_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/collision/ RP3D_collision_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/collision/broadphase/ RP3D_collision_broadphase_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/collision/narrowphase/ RP3D_collision_narrowphase_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/collision/narrowphase/GJK/ RP3D_collision_narrowphase_GJK_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/collision/narrowphase/SAT/ RP3D_collision_narrowphase_SAT_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/collision/shapes/ RP3D_collision_shapes_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/components/ RP3D_components_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/constraint/ RP3D_constraint_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/engine/ RP3D_engine_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/mathematics/ RP3D_mathematics_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/memory/ RP3D_memory_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/systems/ RP3D_systems_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/utils/ RP3D_utils_SRC)
+# aux_source_directory(luaclib-src/reactphysics3d/src/utils/quickhull/ RP3D_utils_quickhull_SRC)
+# # message(STATUS ">>> [rp3d] LUA_SRC=${RP3D_LUA_SRC}")
+# # message(STATUS ">>> [rp3d] body_SRC=${RP3D_body_SRC}")
+# # message(STATUS ">>> [rp3d] collision_SRC=${RP3D_collision_SRC}")
+# set(RP3D_ALL_SRC "${RP3D_LUA_SRC};${RP3D_body_SRC};${RP3D_collision_SRC};${RP3D_collision_broadphase_SRC};${RP3D_collision_narrowphase_SRC};${RP3D_collision_narrowphase_GJK_SRC};${RP3D_collision_narrowphase_SAT_SRC};${RP3D_collision_shapes_SRC};${RP3D_components_SRC};${RP3D_constraint_SRC};${RP3D_engine_SRC};${RP3D_mathematics_SRC};${RP3D_memory_SRC};${RP3D_systems_SRC};${RP3D_utils_SRC};${RP3D_utils_quickhull_SRC}")
+# # message(STATUS ">>> [rp3d] ALL_SRC=${RP3D_ALL_SRC}")
+# add_luaclib(rp3d SRCS "${RP3D_ALL_SRC}"
+#     INCLUDES "luaclib-src/reactphysics3d/include/;luaclib-src/reactphysics3d/include/reactphysics3d/body/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/broadphase/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/narrowphase/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/narrowphase/GJK/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/narrowphase/SAT/;luaclib-src/reactphysics3d/include/reactphysics3d/collision/shapes/;luaclib-src/reactphysics3d/include/reactphysics3d/components/;luaclib-src/reactphysics3d/include/reactphysics3d/constraint/;luaclib-src/reactphysics3d/include/reactphysics3d/containers/;luaclib-src/reactphysics3d/include/reactphysics3d/engine/;luaclib-src/reactphysics3d/include/reactphysics3d/mathematics/;luaclib-src/reactphysics3d/include/reactphysics3d/memory/;luaclib-src/reactphysics3d/include/reactphysics3d/systems/;luaclib-src/reactphysics3d/include/reactphysics3d/utils/;luaclib-src/reactphysics3d/include/reactphysics3d/utils/quickhull/"
+# )
 
 # 生成动态库 math3d.so
 add_luaclib(math3d SRC_DIR luaclib-src/math3d
@@ -331,7 +331,7 @@ function(add_cservice_from_dir SRC_DIR PATH_PREFIX)
 endfunction()
 
 add_cservice_from_dir("core/skynet/service-src" ".*core/skynet/service-src/service_")
-add_cservice_from_dir("cservice_src" ".*cservice_src/")
+add_cservice_from_dir("cservice-src" ".*cservice-src/service_")
 
 # 拷贝其他文件
 message(STATUS "The value of CMAKE_SOURCE_DIR is: ${CMAKE_SOURCE_DIR}")
