@@ -23,12 +23,13 @@ jobs:
       run: cmake --build out/build/x64-debug
 
     - name: Package
+      shell: pwsh
       run: |
-        mkdir package
-        cp out/build/x64-debug/skynet.exe package/
-        cp out/build/x64-debug/luaclib/*.so package/
-        cp out/build/x64-debug/cservice/*.so package/
-        cp -r service lualib test examples package/
+        New-Item -ItemType Directory -Path package -Force
+        Copy-Item out/build/x64-debug/skynet.exe package/
+        Copy-Item out/build/x64-debug/luaclib/*.so package/
+        Copy-Item out/build/x64-debug/cservice/*.so package/
+        Copy-Item -Recurse out/build/x64-debug/lualib,out/build/x64-debug/test,out/build/x64-debug/service,out/build/x64-debug/examples package/
         Compress-Archive -Path package/* -DestinationPath skynet-windows-x64.zip
 
     - name: Upload artifact
@@ -48,7 +49,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y libreadline-dev
 
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib_src/openssl/lib/linux
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib-src/openssl/lib/linux
 
     - name: Build
       run: cmake --build build
@@ -58,7 +59,7 @@ jobs:
         mkdir -p package
         cp build/skynet package/
         cp build/luaclib/*.so package/
-        cp -r service lualib test examples package/
+        cp -r build/lualib build/test build/service build/examples package/
         zip -r skynet-linux-x64.zip package/*
 
     - name: Upload artifact
@@ -75,7 +76,7 @@ jobs:
         submodules: true
 
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib_src/openssl/lib/mac
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DRP3D_OPENSSL_LIB_DIR=${{ github.workspace }}/luaclib-src/openssl/lib/mac
 
     - name: Build
       run: cmake --build build
@@ -85,7 +86,7 @@ jobs:
         mkdir -p package
         cp build/skynet package/
         cp build/luaclib/*.so package/
-        cp -r service lualib test examples package/
+        cp -r build/lualib build/test build/service build/examples package/
         zip -r skynet-macos-x64.zip package/*
 
     - name: Upload artifact
