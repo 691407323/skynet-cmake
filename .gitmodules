@@ -1,5 +1,5 @@
 [submodule "skynet"]
-	path = skynet
+	path = core/skynet/skynet
 	url = https://github.com/cloudwu/skynet.git
 [submodule "3rd/pthread-win32"]
 	path = 3rd/pthread-win32
