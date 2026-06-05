@@ -26,10 +26,8 @@ jobs:
       shell: pwsh
       run: |
         New-Item -ItemType Directory -Path package -Force
-        Copy-Item out/build/x64-debug/skynet.exe package/
-        Copy-Item out/build/x64-debug/luaclib/*.so package/
-        Copy-Item out/build/x64-debug/cservice/*.so package/
-        Copy-Item -Recurse out/build/x64-debug/lualib,out/build/x64-debug/test,out/build/x64-debug/service,out/build/x64-debug/examples package/
+        Get-ChildItem out/build/x64-debug -File | Copy-Item -Destination package/
+        Get-ChildItem out/build/x64-debug -Directory | Copy-Item -Destination package/ -Recurse
         Compress-Archive -Path package/* -DestinationPath skynet-windows-x64.zip
 
     - name: Upload artifact
@@ -57,10 +55,9 @@ jobs:
     - name: Package
       run: |
         mkdir -p package
-        cp build/skynet package/
-        cp build/luaclib/*.so package/
-        cp -r build/lualib build/test build/service build/examples package/
-        zip -r skynet-linux-x64.zip package/*
+        find build -maxdepth 1 -type f -exec cp {} package/ \;
+        find build -maxdepth 1 -type d ! -name "build" ! -name "CMakeFiles" | while read dir; do cp -r "$dir" package/; done
+        cd package && zip -r ../skynet-linux-x64.zip .
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -84,10 +81,9 @@ jobs:
     - name: Package
       run: |
         mkdir -p package
-        cp build/skynet package/
-        cp build/luaclib/*.so package/
-        cp -r build/lualib build/test build/service build/examples package/
-        zip -r skynet-macos-x64.zip package/*
+        find build -maxdepth 1 -type f -exec cp {} package/ \;
+        find build -maxdepth 1 -type d ! -name "build" ! -name "CMakeFiles" | while read dir; do cp -r "$dir" package/; done
+        cd package && zip -r ../skynet-macos-x64.zip .
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
