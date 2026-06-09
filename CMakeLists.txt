@@ -296,11 +296,11 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
         LINKS "liblua"
         DEFS "strncasecmp=_strnicmp;strcasecmp=_stricmp;DISABLE_INVALID_NUMBERS"
     )
-    target_compile_definitions(cjson PRIVATE
-        _CRT_SECURE_NO_WARNINGS
-        inline=__inline
-        snprintf=_snprintf
-    )
+    # target_compile_definitions(cjson PRIVATE
+    #     _CRT_SECURE_NO_WARNINGS
+    #     inline=__inline
+    #     snprintf=_snprintf
+    # )
 else()
     add_luaclib(cjson SRCS "luaclib-src/lua-cjson/lua_cjson.c;luaclib-src/lua-cjson/strbuf.c;luaclib-src/lua-cjson/fpconv.c")
 endif()
