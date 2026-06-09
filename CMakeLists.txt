@@ -31,6 +31,10 @@ set(LUACLIB_TARGETS)
 function(add_luaclib name)
     cmake_parse_arguments(A "" "SRC_DIR" "SRCS;LINKS;INCLUDES;DEFS" ${ARGN})
 
+    if(A_SRC_DIR AND A_SRCS)
+        message(FATAL_ERROR "add_luaclib(${name}): 不能同时指定 SRC_DIR 和 SRCS")
+    endif()
+
     if(A_SRC_DIR)
         aux_source_directory(${A_SRC_DIR} ${name}_SRC)
         set(srcs ${${name}_SRC})
@@ -39,7 +43,12 @@ function(add_luaclib name)
     endif()
 
     add_library(${name} SHARED ${srcs})
-    set(LUACLIB_TARGETS "${LUACLIB_TARGETS};${name}" PARENT_SCOPE)
+    # set(LUACLIB_TARGETS "${LUACLIB_TARGETS};${name}" PARENT_SCOPE)
+    if(NOT ${name} IN_LIST LUACLIB_TARGETS)
+        set(LUACLIB_TARGETS "${LUACLIB_TARGETS};${name}" PARENT_SCOPE)
+    else()
+        message(WARNING "add_luaclib(${name}): 模块 ${name} 已经添加过了，可能会导致重复定义")
+    endif()
 
     if(A_LINKS)
         target_link_libraries(${name} ${A_LINKS})
@@ -55,7 +64,7 @@ function(add_luaclib name)
         target_include_directories(${name} PRIVATE core/skynet/3rd/lua/)
     endif()
     if(A_DEFS)
-        target_compile_definitions(${name} ${A_DEFS})
+        target_compile_definitions(${name} PRIVATE ${A_DEFS})
     endif()
 endfunction()
 
@@ -274,6 +283,26 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux|Darwin")
         target_link_directories(ltls PRIVATE ${RP3D_OPENSSL_LIB_DIR})
     endif()
     target_link_libraries(ltls ssl crypto)
+endif()
+
+# 生成动态库 winhelp.so
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    add_luaclib(winhelp SRCS "luaclib-src/winStdin/lua-winhelp.c" LINKS "Kernel32;liblua")
+endif()
+
+# 生成动态库 cjson.so
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    add_luaclib(cjson SRCS "luaclib-src/lua-cjson/lua_cjson.c;luaclib-src/lua-cjson/strbuf.c;luaclib-src/lua-cjson/fpconv.c"
+        LINKS "liblua"
+        DEFS "strncasecmp=_strnicmp;strcasecmp=_stricmp;DISABLE_INVALID_NUMBERS"
+    )
+    target_compile_definitions(cjson PRIVATE
+        _CRT_SECURE_NO_WARNINGS
+        inline=__inline
+        snprintf=_snprintf
+    )
+else()
+    add_luaclib(cjson SRCS "luaclib-src/lua-cjson/lua_cjson.c;luaclib-src/lua-cjson/strbuf.c;luaclib-src/lua-cjson/fpconv.c")
 endif()
 
 # 平台特定 luaclib 输出目录
